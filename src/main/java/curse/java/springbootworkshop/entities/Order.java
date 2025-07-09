@@ -1,6 +1,7 @@
 package curse.java.springbootworkshop.entities;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import curse.java.springbootworkshop.entities.enums.OrderStatus;
 import jakarta.persistence.*;
 
 import java.io.Serializable;
@@ -23,13 +24,16 @@ public class Order implements Serializable {
     @JoinColumn(name = "client_id")
     private User client;
 
+    private Integer orderStatus;
+
     //Constructors
 
     public Order() {}
 
-    public Order(User client, Instant moment) {
+    public Order(User client, Instant moment, OrderStatus orderStatus) {
         this.client = client;
         this.moment = moment;
+        setOrderStatus(orderStatus);
     }
 
     //Getters and Setters
@@ -51,6 +55,17 @@ public class Order implements Serializable {
 
     public void setMoment(Instant moment) {
         this.moment = moment;
+    }
+
+    public OrderStatus getOrderStatus() {
+        return OrderStatus.valueOf(orderStatus);
+    }
+
+    public void setOrderStatus(OrderStatus orderStatus) {
+
+        if (orderStatus != null) {
+            this.orderStatus = orderStatus.getCode();
+        }
     }
 
     @Override
