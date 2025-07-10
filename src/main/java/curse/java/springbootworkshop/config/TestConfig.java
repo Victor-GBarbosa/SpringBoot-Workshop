@@ -1,14 +1,8 @@
 package curse.java.springbootworkshop.config;
 
-import curse.java.springbootworkshop.entities.Category;
-import curse.java.springbootworkshop.entities.Order;
-import curse.java.springbootworkshop.entities.Product;
-import curse.java.springbootworkshop.entities.User;
+import curse.java.springbootworkshop.entities.*;
 import curse.java.springbootworkshop.entities.enums.OrderStatus;
-import curse.java.springbootworkshop.repositories.CategoryRepository;
-import curse.java.springbootworkshop.repositories.OrderRepository;
-import curse.java.springbootworkshop.repositories.ProductRepository;
-import curse.java.springbootworkshop.repositories.UserRepository;
+import curse.java.springbootworkshop.repositories.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Configuration;
@@ -30,6 +24,8 @@ public class TestConfig implements CommandLineRunner {
     private CategoryRepository categoryRepository;
     @Autowired
     private ProductRepository productRepository;
+    @Autowired
+    private OrderItemRepository orderItemRepository;
 
     @Override
     public void run(String... args) throws Exception {
@@ -64,5 +60,10 @@ public class TestConfig implements CommandLineRunner {
 
        productRepository.saveAll(Arrays.asList(prod1, prod2, prod3, prod4));
 
+        OrderItem oi1 = new OrderItem(order1, prod1, 2, prod1.getPrice());
+        OrderItem oi2 = new OrderItem(order1, prod3, 1, prod3.getPrice());
+        OrderItem oi3 = new OrderItem(order2, prod3, 2, prod3.getPrice());
+        OrderItem oi4 = new OrderItem(order3, prod4, 2, prod4.getPrice());
+        orderItemRepository.saveAll(Arrays.asList(oi1, oi2, oi3, oi4));
     }
 }

@@ -2,13 +2,16 @@ package curse.java.springbootworkshop.entities;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import curse.java.springbootworkshop.entities.enums.OrderStatus;
 import jakarta.persistence.*;
 
 import java.io.Serializable;
 import java.time.Instant;
+import java.util.HashSet;
 import java.util.Objects;
+import java.util.Set;
 
 @Entity
 @Table(name = "tb_order")
@@ -23,11 +26,14 @@ public class Order implements Serializable {
     private Instant moment;
 
     @ManyToOne
-    @JsonBackReference
     @JoinColumn(name = "client_id")
     private User client;
 
     private Integer orderStatus;
+
+    @JsonManagedReference
+    @OneToMany(mappedBy = "id.order", cascade = CascadeType.ALL, fetch = FetchType.EAGER )
+    private Set<OrderItem> orderItems = new HashSet<>();
 
     //Constructors
 
@@ -40,6 +46,10 @@ public class Order implements Serializable {
     }
 
     //Getters and Setters
+    public Set<OrderItem> getOrderItems() {
+        return orderItems;
+    }
+
     public User getClient() {
         return client;
     }
