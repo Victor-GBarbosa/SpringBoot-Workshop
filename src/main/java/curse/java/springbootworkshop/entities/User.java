@@ -1,6 +1,7 @@
 package curse.java.springbootworkshop.entities;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -20,8 +21,9 @@ public class User implements Serializable{
     private String phone;
     private String password;
 
-    @JsonIgnore
+
     @OneToMany(mappedBy = "client")
+    @JsonManagedReference
     private List<Order> orders = new ArrayList<>();
 
     public User(String name, String email, String phone, String password) {

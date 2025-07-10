@@ -1,6 +1,8 @@
 package curse.java.springbootworkshop.entities;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import curse.java.springbootworkshop.entities.enums.OrderStatus;
 import jakarta.persistence.*;
 
@@ -21,6 +23,7 @@ public class Order implements Serializable {
     private Instant moment;
 
     @ManyToOne
+    @JsonBackReference
     @JoinColumn(name = "client_id")
     private User client;
 
