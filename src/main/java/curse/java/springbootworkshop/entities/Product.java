@@ -24,14 +24,14 @@ public class Product implements Serializable {
     private double price;
     private String imgUrl;
 
-
-
-
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(name = "tb_product_category",
             joinColumns = @JoinColumn(name = "product_id"),
             inverseJoinColumns = @JoinColumn(name = "category_id"))
     private Set<Category> categories = new HashSet<>();
+
+    @OneToMany(mappedBy = "id.product", fetch = FetchType.EAGER)
+    private Set<OrderItem> items = new HashSet<>();
 
     // Constructors
     public Product() {
@@ -92,6 +92,15 @@ public class Product implements Serializable {
 
     public void setPrice(double price) {
         this.price = price;
+    }
+
+    @JsonIgnore
+    public Set<Order> getOrders() {
+        Set<Order> set = new HashSet<>();
+        for (OrderItem item : items) {
+            set.add(item.getOrder());
+        }
+        return set;
     }
 
 

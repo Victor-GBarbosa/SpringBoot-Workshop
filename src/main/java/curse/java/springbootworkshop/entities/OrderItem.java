@@ -2,6 +2,7 @@ package curse.java.springbootworkshop.entities;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import curse.java.springbootworkshop.entities.pk.OrderItemPK;
 import jakarta.persistence.EmbeddedId;
 import jakarta.persistence.Entity;
@@ -47,6 +48,11 @@ public class OrderItem implements Serializable {
         this.id.setOrder(order);
         return order;
     }
+
+    public double getSubTotal() {
+        return subTotal;
+    }
+
 
     public Product getProduct() {
         return id.getProduct();
