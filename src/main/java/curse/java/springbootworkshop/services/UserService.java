@@ -2,6 +2,7 @@ package curse.java.springbootworkshop.services;
 
 import curse.java.springbootworkshop.entities.User;
 import curse.java.springbootworkshop.repositories.UserRepository;
+import curse.java.springbootworkshop.services.exceptions.ResourceNotFoundException;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -24,7 +25,7 @@ public class UserService {
 
     public User findById(Long id) {
         Optional<User> obj = repository.findById(id);
-        return obj.get();
+        return obj.orElseThrow(() -> new ResourceNotFoundException(id));
     }
 
     public User insert(User obj) {
